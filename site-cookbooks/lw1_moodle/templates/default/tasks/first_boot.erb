@@ -1,0 +1,98 @@
+require 'base64'
+
+def adjust_location
+  location = {}
+  case node.ec2.placement_availability_zone
+  when /^ap-northeast/
+    location[:lang] = "ja"
+    location[:zone] = "Asia/Tokyo"
+  else
+    location[:lang] = "en"
+    location[:zone] = "UTC"
+  end
+  location
+end
+moodle_location = adjust_location
+moodle_var = "<%= node[:lw1_moodle][:install][:version] %>"
+
+file '/etc/httpd/conf.d/welcome.conf' do
+  action :delete
+end
+
+service 'mysqld' do
+  action [:enable, :start]
+end
+
+bash 'mysql_secure_install emulate' do
+  code <<-"EOH"
+    /usr/bin/mysqladmin drop test -f
+    /usr/bin/mysql -e "DELETE FROM user WHERE user = '';" -D mysql
+    /usr/bin/mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" -D mysql
+    /usr/bin/mysql -e "SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{node.ec2.instance_id}');" -D mysql
+    /usr/bin/mysql -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{node.ec2.instance_id}');" -D mysql
+    /usr/bin/mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{node.ec2.instance_id}');" -D mysql
+    /usr/bin/mysqladmin flush-privileges -pnewpassword -p#{node.ec2.instance_id}
+  EOH
+  action :run
+  only_if "/usr/bin/mysql -u root -e 'show databases;'"
+end
+
+package 'mod24_ssl'
+
+bash "install moodle" do
+  code <<-EOL
+    php /var/www/html/admin/cli/install.php \
+    --chmod=2770 \
+    --lang=#{moodle_location[:lang]} \
+    --wwwroot=https://localhost.localdomain \
+    --dataroot=/var/www/moodledata \
+    --dbuser=root \
+    --dbpass=#{node.ec2.instance_id} \
+    --dbsocket=/var/lib/mysql/mysql.sock \
+    --adminpass=#{node.ec2.instance_id} \
+    --non-interactive \
+    --fullname="Moodle #{moodle_var} by Amiage"\
+    --shortname=Moodle \
+    --agree-license
+  EOL
+end
+
+# template "/var/www/html/config.php" do
+#   local true
+#   source "/opt/lw1/tasks/config.php.erb"
+# end
+
+## HT: http://qiita.com/mnagaku/items/42b7aa0064901b3d456b
+ruby_block "fix wwwroot" do
+  block do
+    _file = Chef::Util::FileEdit.new('/var/www/html/config.php')
+    _file.search_file_replace_line(/localhost.localdomain/, %Q{$CFG->wwwroot   = "https://".$_SERVER["SERVER_NAME"];})
+    _file.write_file
+  end
+end
+
+template "/etc/php.d/date.ini" do
+  local true
+  source "/opt/lw1/tasks/date.ini.erb"
+  variables moodle_location
+end
+
+bash "modify permissions" do
+  code <<-'EOL'
+  chown -R root.apache /var/www/moodle/mod
+  chown -R root.apache /var/www/moodle/blocks
+  chown root.apache /var/www/html/config.php
+  find /var/www/moodle/mod -type d -exec chmod 0755 {} \;
+  find /var/www/moodle/mod -type f -exec chmod 0644 {} \;
+  find /var/www/moodle/blocks -type d -exec chmod 0755 {} \;
+  find /var/www/moodle/blocks -type f -exec chmod 0644 {} \;
+  EOL
+end
+
+service 'httpd' do
+  action [:enable, :start]
+end
+
+cron "setup_moodle_on_init" do
+  action :delete
+end

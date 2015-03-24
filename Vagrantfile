@@ -45,10 +45,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   ## Sction Provisioning
   config.vm.provision :shell, :path => "bootstrap.sh"
-#  config.vm.provision :chef_solo do |chef|
-#    chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
-#    chef.add_recipe 'simplelog_handler::default'
-#    chef.add_recipe 'lw1_moodle::default'
-#  end
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
+    chef.add_recipe 'simplelog_handler::default'
+    chef.add_recipe 'lw1_moodle::default'
+  end
 
 end

@@ -1,0 +1,37 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "source_ami": "ami-146e2a7c",
+      "instance_type": "c3.large",
+      "ssh_username": "ec2-user",
+      "ssh_timeout": "10m",
+      "ami_name": "Moodle 2.8.5 {{timestamp}}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "bootstrap.sh"
+      ]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": [
+        "site-cookbooks"
+      ],
+      "run_list" : [
+        "lw1_moodle::default"
+      ]
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "cleanup.sh"
+      ]
+    }
+  ]
+}
