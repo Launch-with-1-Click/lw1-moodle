@@ -7,10 +7,6 @@ template "/opt/lw1/tasks/first_boot.rb" do
   source "tasks/first_boot.erb"
 end
 
-# cookbook_file "/opt/lw1/tasks/config.php.erb" do
-#   source "lw1_tasks/config.php.erb"
-# end
-
 cookbook_file "/opt/lw1/tasks/date.ini.erb" do
   source "lw1_tasks/date.ini.erb"
 end
