@@ -27,9 +27,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.instance_type = 'c3.large'
     case ENV['AWS_REGION']
     when 'ap-northeast-1'
-      aws.ami = 'ami-18869819' # Amazon Linux AMI 2014.09.2 (HVM)
+      aws.ami = 'ami-c7f90ec7' # Amazon Linux AMI 2015.03.0 (HVM)
     when 'us-east-1'
-      aws.ami = 'ami-146e2a7c' # Amazon Linux AMI 2014.09.2 (HVM)
+      aws.ami = 'ami-10cae778' # Amazon Linux AMI 2015.03.0 (HVM)
     else
       raise "Unsupported region #{ENV['AWS_REGION']}"
     end
