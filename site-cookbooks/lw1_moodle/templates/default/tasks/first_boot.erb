@@ -12,8 +12,8 @@ def adjust_location
   end
   location
 end
-moodle_location = adjust_location
-moodle_var = "<%= node[:lw1_moodle][:install][:version] %>"
+mautic_location = adjust_location
+mautic_var = "<%= node[:lw1_mautic][:install][:version] %>"
 
 file '/etc/httpd/conf.d/welcome.conf' do
   action :delete

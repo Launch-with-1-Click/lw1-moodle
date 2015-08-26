@@ -2,17 +2,17 @@
 
 package 'git'
 package 'tmux'
-package 'php55'
 package 'mysql-server'
 
 %w[
-php55-mysqlnd
-php55-gd
-php55-mbstring
-php55-xmlrpc
-php55-soap
-php55-intl
-php55-opcache
+php56
+php56-mysqlnd
+php56-gd
+php56-mbstring
+php56-xmlrpc
+php56-soap
+php56-intl
+php56-opcache
 ].map do |php_m|
   package php_m
 end

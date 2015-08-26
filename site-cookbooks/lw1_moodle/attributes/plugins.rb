@@ -3,31 +3,26 @@ default[:lw1_moodle][:plugins][:base_url] = 'https://moodle.org/plugins/download
 
 default[:lw1_moodle][:plugins][:modules] = {
   "questionnaire" => {
-    version: "2.8.2",
-    location: "/8220/mod_questionnaire_moodle28_2014111002.zip",
-    checksum: "fa76a26de84170203feeec3c920d1c998aafef8c9cd76b44650fdeec801bf76c"
+    version: "2.9.0",
+    location: "/8762/mod_questionnaire_moodle29_2015051101.zip"
+    checksum: "06a2638f40514fbfd058bce8c518d36c3a18d293fcbcf510a264ec2cea90e05f"
   },
   "scheduler" => {
-    version: "2.7.0",
-    location: "/6800/mod_scheduler_moodle28_2014090100.zip",
-    checksum: "e635ef18fe05ece8140dc4475cee03d6d10f767edaa8943962276f2d55c9257a"
+    version: "2.7.1",
+    location: "/8500/mod_scheduler_moodle29_2014090102.zip",
+    checksum: "568be7d66dd3824c6efe1b1c18137d1ddcfd9fe34a89a2ccfc26507cda8d1874"
   },
   "pcast" => {
-    version: "2.7",
-    location: "/6306/mod_pcast_moodle27_2014061600.zip",
-    checksum: "a67db8f347367476cc149b6c1bd1278183cc841855cbe911824befc12e90194d"
+    version: "2.9",
+    location: "/8649/mod_pcast_moodle29_2015050500.zip",
+    checksum: "bc32f6fd146d5f0b6f79104576d5ca548bc9e476ea4d50c3c03d43a7fa157052"
   },
 }
 
 default[:lw1_moodle][:plugins][:blocks] = {
   "configurable_reports" => {
-    version: "2.3.4",
-    location: "/6884/block_configurable_reports_moodle27_2011040115.zip",
-    checksum: "e6ad965f1fa3a4764891adbe817badbfc49281e7e2244553007a7d2c68d5cc53"
-  },
-  "quickmail" => {
-    version: "1.5.0",
-    location: "/6473/block_quickmail_moodle27_2014042914.zip",
-    checksum: "1a7142f68e9cbb0205cbffcec3ad80f4c9c021f1d4b53faa11854ec449513233"
+    version: "2.3.7",
+    location: "/9071/block_configurable_reports_moodle29_2011040119.zip",
+    checksum: "1769af4f28f9e082d8361cbeb1ecd99a95ce0dcd4e5fcf0c1fa20e481e87b659"
   }
 }
