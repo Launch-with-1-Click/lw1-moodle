@@ -4,7 +4,7 @@ default[:lw1_moodle][:plugins][:base_url] = 'https://moodle.org/plugins/download
 default[:lw1_moodle][:plugins][:modules] = {
   "questionnaire" => {
     version: "2.9.0",
-    location: "/8762/mod_questionnaire_moodle29_2015051101.zip"
+    location: "/8762/mod_questionnaire_moodle29_2015051101.zip",
     checksum: "06a2638f40514fbfd058bce8c518d36c3a18d293fcbcf510a264ec2cea90e05f"
   },
   "scheduler" => {
