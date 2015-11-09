@@ -91,3 +91,10 @@ end
 cron "setup_moodle_on_init" do
   action :delete
 end
+
+%w{/var/chef/cache /var/chef/backup}.map do |dir|
+  directory dir do
+    action :delete
+    recursive true
+  end
+end
