@@ -3,14 +3,14 @@ default[:lw1_moodle][:plugins][:base_url] = 'https://moodle.org/plugins/download
 
 default[:lw1_moodle][:plugins][:modules] = {
   "questionnaire" => {
-    version: "2.9.0",
-    location: "/8762/mod_questionnaire_moodle29_2015051101.zip",
-    checksum: "06a2638f40514fbfd058bce8c518d36c3a18d293fcbcf510a264ec2cea90e05f"
+    version: "2.9.1",
+    location: "/9599/mod_questionnaire_moodle29_2015051103.zip",
+    checksum: "dfb81fe43b871d0e6b98015f499cb9de9b93a086df6c55e6af8ea8d9c8994af3"
   },
   "scheduler" => {
-    version: "2.7.1",
-    location: "/8500/mod_scheduler_moodle29_2014090102.zip",
-    checksum: "568be7d66dd3824c6efe1b1c18137d1ddcfd9fe34a89a2ccfc26507cda8d1874"
+    version: "2.9.0",
+    location: "/9614/mod_scheduler_moodle30_2015102900.zip",
+    checksum: "31f179bd65654eeb68fbf2fc2a8db4031018ced1a7c1188f834924b30dd5953a"
   },
   "pcast" => {
     version: "2.9",

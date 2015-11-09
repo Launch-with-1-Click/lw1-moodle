@@ -3,9 +3,9 @@ default[:lw1_moodle][:group] = 'apache'
 
 ## Sum = Sha256
 default[:lw1_moodle][:install] = {
-  version: '2.9.1',
+  version: '2.9.3',
   version_base: 'stable29',
-  checksum: "bfc9398904809ed6041e8bcbdb75d7bc1917d5a0ff47fd0069812d783e03c020",
+  checksum: "48f59bd77df53fb5f608da492f09c21eb7c8994c3ddce39fa7a9fd8e3e0e8f46",
   base_url: "https://download.moodle.org"
 }
 
