@@ -14,7 +14,7 @@
       "ssh_username": "ec2-user",
       "ssh_timeout": "10m",
       "ssh_pty" : true,
-      "ami_name": "Moodle 2.9.3 {{timestamp}}"
+      "ami_name": "Moodle {{user `product_version`}} {{timestamp}}"
     }
   ],
 
