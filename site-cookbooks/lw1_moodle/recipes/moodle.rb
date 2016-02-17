@@ -34,6 +34,10 @@ mount "/var/www/html" do
   action [:mount, :enable]
 end
 
+cookbook_file "/etc/httpd/conf.d/moodle.conf" do
+  source "httpd/moodle.conf"
+end
+
 directory "/var/www/moodledata" do
   action :create
   mode 0775

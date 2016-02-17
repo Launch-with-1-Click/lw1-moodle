@@ -15,8 +15,10 @@ end
 moodle_location = adjust_location
 moodle_var = "<%= node[:lw1_moodle][:install][:version] %>"
 
-file '/etc/httpd/conf.d/welcome.conf' do
-  action :delete
+%w[userdir.conf welcome.conf autoindex.conf].map do |conf|
+  file "/etc/httpd/conf.d/#{conf}" do
+    action :delete
+  end
 end
 
 service 'mysqld' do
@@ -72,6 +74,18 @@ template "/etc/php.d/date.ini" do
   variables moodle_location
 end
 
+## Permission Trouble.
+# template "/var/www/html/install_amiage.php" do
+#   local true
+#   mode  '0644'
+#   owner "apache"
+#   group "apache"
+#   source "/opt/lw1/tasks/install_amiage.php.erb"
+#   variables ({
+#     :instance_id => node[:ec2][:instance_id]
+#   })
+# end
+
 bash "modify permissions" do
   code <<-'EOL'
   chown -R root.apache /var/www/moodle/mod
@@ -82,6 +96,10 @@ bash "modify permissions" do
   find /var/www/moodle/blocks -type d -exec chmod 0755 {} \;
   find /var/www/moodle/blocks -type f -exec chmod 0644 {} \;
   EOL
+end
+
+service 'postfix' do
+  action [:start, :enable]
 end
 
 service 'httpd' do

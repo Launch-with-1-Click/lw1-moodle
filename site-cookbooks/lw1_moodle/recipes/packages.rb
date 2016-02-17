@@ -2,7 +2,12 @@
 
 package 'git'
 package 'tmux'
+package 'postfix'
 package 'mysql-server'
+
+service 'sendmail' do
+  action [:stop, :disable]
+end
 
 %w[
 php56
@@ -26,3 +31,12 @@ ruby_block "update php.ini" do
     _file.write_file
   end
 end
+
+ruby_block "postfix main.cf" do
+  block do
+    _file = Chef::Util::FileEdit.new('/etc/postfix/main.cf')
+    _file.search_file_replace_line(/^#local_recipient_maps =$/, "local_recipient_maps =")
+    _file.write_file
+  end
+end
+

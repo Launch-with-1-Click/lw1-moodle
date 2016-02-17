@@ -11,6 +11,10 @@ cookbook_file "/opt/lw1/tasks/date.ini.erb" do
   source "lw1_tasks/date.ini.erb"
 end
 
+cookbook_file "/opt/lw1/tasks/install_amiage.php.erb" do
+  source "lw1_tasks/install_amiage.php.erb"
+end
+
 cron "setup_moodle_on_init" do
   action :create
   time :reboot
